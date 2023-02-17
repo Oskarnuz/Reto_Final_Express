@@ -11,14 +11,13 @@ app.use(express.json())
 app.get('/api/tasks', (req, res) => {
     const records = tasksTable.findAll()
     res.status(200).json(records);
-    console.log(records)
 });
 
 //- GET /api/tasks/:id: para obtener una tarea en particular.
 app.get('/api/tasks/:id', (req, res) => {
     const { id } = req.params
     console.log(id)
-    const record = tasksTable.findById(id)
+    const record = tasksTable.findById(+id)
     res.status(200).json(record);
 });
 
@@ -34,15 +33,17 @@ app.post('/api/tasks', (req, res) => {
 //- PUT /api/tasks/:id: para actualizar una tarea existente.
 app.put('/api/tasks/:id', (req, res) => {
     const data = req.body
+    console.log(data)
     const { id } = req.params
-    const record = tasksTable.update({id: id, title: data.title})
-    res.status(200).json(record)
+    console.log(id)
+    tasksTable.update({id: +id, title: data.title})
+    res.status(200).json({status: 'Ok'})
 })
 
 //- DELETE /api/tasks/:id: para eliminar una tarea existente.
 app.delete('/api/tasks/:id', (req, res) => {
     const { id } = req.params
-    tasksTable.remove(id)
+    tasksTable.remove(+id)
     res.status(200)
 })
 
