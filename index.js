@@ -41,7 +41,8 @@ app.put('/api/tasks/:id', (req, res) => {
 
 //- DELETE /api/tasks/:id: para eliminar una tarea existente.
 app.delete('/api/tasks/:id', (req, res) => {
-    tasksTable.delete(id)
+    const { id } = req.params
+    tasksTable.remove(id)
     res.status(200)
 })
 
